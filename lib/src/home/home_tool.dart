@@ -12,7 +12,7 @@ class HomeTool implements Tool {
   IconData get icon => Icons.home;
 
   @override
-  String get fullTitle => "all tools";
+  String get fullTitle => "All tools";
 
   @override
   String get route => Routes.home;
@@ -21,13 +21,13 @@ class HomeTool implements Tool {
   Group get group => const HomeGroup();
 
   @override
-  String get description => "all tools";
+  String get description => "All tools";
 
   @override
   String get name => "home";
 
   @override
-  String get shortTitle => "all tools";
+  String get shortTitle => "All tools";
 
   @override
   Widget get page => const HomePage();

@@ -1,6 +1,6 @@
 import 'package:devlab_flutter/src/described_enum.dart';
 
-enum SqlDialect {
+enum SqlDialect implements DescribedEnum {
   generic("generic_sql");
 
   @override

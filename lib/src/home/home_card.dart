@@ -10,9 +10,10 @@ import 'package:yaru_widgets/yaru_widgets.dart';
 class HomeCard extends StatelessWidget {
   final isFavoriteVisibleProvider = StateProvider<bool>((ref) => false);
 
+  final Color color;
   final Tool tool;
 
-  HomeCard(this.tool, {super.key});
+  HomeCard(this.tool, this.color, {super.key});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,6 +26,7 @@ class HomeCard extends StatelessWidget {
             onEnter: (_) => ref.read(isFavoriteVisibleProvider.notifier).state = true,
             onExit: (_) => ref.read(isFavoriteVisibleProvider.notifier).state = false,
             child: YaruSelectableContainer(
+              padding: const EdgeInsets.all(10),
               onTap: () {
                 ref.read(selectedToolProvider.notifier).state = tool;
                 ref.read(selectedGroupProvider.notifier).state = null;
@@ -33,35 +35,25 @@ class HomeCard extends StatelessWidget {
               selected: false,
               child: Stack(
                 children: <Widget>[
-                  SizedBox(
-                    height: 200, width: 300,
-                    child: Column(
-                      children: [
-                        Icon(
-                          tool.icon,
-                          size: 50,
-                        ),
-                        Text(
-                          tool.fullTitle,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        Text(
-                          tool.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    // child: ListTile(
-                    //   mouseCursor: SystemMouseCursors.click,
-                    //   leading: Icon(tool.icon),
-                    //   title: Text(tool.fullTitle),
-                    //   subtitle: Text(
-                    //     tool.description,
-                    //     maxLines: 3,
-                    //     overflow: TextOverflow.ellipsis,
-                    //   ),
-                    // ),
+                  Column(
+                    children: [
+                      Icon(
+                        tool.icon,
+                        color: color,
+                        size: 40,
+                      ),
+                      Text(
+                        tool.fullTitle,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        tool.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 1, width: double.infinity),
+                    ],
                   ),
                   Consumer(
                     builder: (child, ref, _) {

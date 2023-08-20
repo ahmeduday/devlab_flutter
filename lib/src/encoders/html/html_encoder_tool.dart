@@ -12,22 +12,22 @@ class HtmlEncoderTool implements Tool {
   IconData get icon => Icons.code;
 
   @override
-  String get fullTitle => "html encoder";
+  String get fullTitle => "HTML Encoder";
 
   @override
   String get route => Routes.htmlEncoder;
 
   @override
-  String get description => "Encode or decode all the applicable characters to their corresponding HTML entities";
+  String get description => "Encode or decode characters to their corresponding HTML entities";
 
   @override
   Group get group => const EncodersGroup();
 
   @override
-  String get name => "html";
+  String get name => "HTML";
 
   @override
-  String get shortTitle => "html encoder";
+  String get shortTitle => "HTML Encoder";
 
   @override
   Widget get page => const HtmlEncoderPage();

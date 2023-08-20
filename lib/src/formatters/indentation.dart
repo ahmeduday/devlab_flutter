@@ -1,10 +1,10 @@
 import 'package:devlab_flutter/src/described_enum.dart';
 
-enum Indentation {
-  oneTab("one_tab"),
-  twoSpaces("two_spaces"),
-  fourSpaces("four_spaces"),
-  compact("compact");
+enum Indentation implements DescribedEnum {
+  oneTab("One Tab"),
+  twoSpaces("Two Spaces"),
+  fourSpaces("Four Spaces"),
+  compact("Compact");
 
   @override
   final String description;

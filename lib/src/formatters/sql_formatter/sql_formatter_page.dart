@@ -4,7 +4,6 @@ import 'package:devlab_flutter/src/helpers.dart';
 import 'package:devlab_flutter/src/widgets/io_editor/code_controller_hook.dart';
 import 'package:devlab_flutter/src/widgets/io_editor/io_editor.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yaru_widgets/yaru_widgets.dart';
@@ -45,18 +44,18 @@ class SqlFormatterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
+            child: YaruSection(headline: "Configuration", children: [
               YaruRow(
                 enabled: true,
                 leadingWidget: const Icon(
                   Icons.code,
                   size: 25,
                 ),
-                trailingWidget: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                trailingWidget: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
                   child: Text(
-                    "dialect",
-                    style: const TextStyle(fontSize: 18),
+                    "Dialect",
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
                 actionWidget: DropdownButton<SqlDialect>(

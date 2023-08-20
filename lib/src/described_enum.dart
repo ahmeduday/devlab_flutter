@@ -1,5 +1,5 @@
-// abstract class DescribedEnum extends Enum {
-//   final String description;
+abstract class DescribedEnum implements Enum {
+  final String description;
 
-//   DescribedEnum(this.description);
-// }
+  DescribedEnum(this.description);
+}

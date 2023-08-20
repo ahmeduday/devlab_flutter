@@ -1,5 +1,6 @@
 // import 'package:devlab_flutter/src/brazil/cpf_cnpj/cnpj_generator_tool.dart';
 // import 'package:devlab_flutter/src/brazil/cpf_cnpj/cpf_generator_tool.dart';
+import 'package:devlab_flutter/src/converters/json_csv/json_csv_converter_tool.dart';
 import 'package:devlab_flutter/src/converters/json_to_class/json_to_class_converter_tool.dart';
 import 'package:devlab_flutter/src/converters/json_to_sql/json_to_sql_converter_tool.dart';
 import 'package:devlab_flutter/src/converters/json_yaml/json_yaml_converter_tool.dart';
@@ -20,6 +21,7 @@ import 'package:devlab_flutter/src/text/markdown_preview/markdown_preview_tool.d
 import 'package:devlab_flutter/src/text/text_diff/text_diff_tool.dart';
 import 'package:devlab_flutter/src/text/text_escape/text_escape_tool.dart';
 import 'package:devlab_flutter/src/text/text_inspector/text_inspector_tool.dart';
+import 'package:devlab_flutter/src/colors/color_scheme/color_scheme_tool.dart';
 import 'package:devlab_flutter/tool.dart';
 
 const allTools = [
@@ -40,11 +42,13 @@ const allTools = [
   Base64ImageEncoderTool(),
   JsonToClassConverterTool(),
   JsonYamlConverterTool(),
+  JsonCsvConverterTool(),
   // CnpjGeneratorTool(),
   HtmlPreviewTool(),
   TextInspectorTool(),
   JsonToSqlConverterTool(),
-  YamlFormatterTool()
+  YamlFormatterTool(),
+  ColorSchemeTool(),
 ];
 
 Tool getToolByName(String name) => allTools.firstWhere((t) => t.name == name);

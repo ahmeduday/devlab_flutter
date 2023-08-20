@@ -1,5 +1,5 @@
-import 'package:devlab_flutter/src/converters/json_yaml/json_yaml_converter_providers.dart';
-import 'package:devlab_flutter/src/converters/json_yaml/json_yaml_conversion_type.dart';
+import 'package:devlab_flutter/src/converters/json_csv/json_csv_conversion_type.dart';
+import 'package:devlab_flutter/src/converters/json_csv/json_csv_converter_providers.dart';
 import 'package:devlab_flutter/src/formatters/indentation.dart';
 import 'package:devlab_flutter/src/helpers.dart';
 import 'package:devlab_flutter/src/widgets/io_editor/code_controller_hook.dart';
@@ -9,11 +9,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:highlight/languages/json.dart';
 import 'package:highlight/languages/yaml.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:json2yaml/json2yaml.dart';
 import 'package:yaru_widgets/yaru_widgets.dart';
 
-class JsonYamlConverterPage extends HookConsumerWidget {
-  const JsonYamlConverterPage({Key? key}) : super(key: key);
+class JsonCsvConverterPage extends HookConsumerWidget {
+  const JsonCsvConverterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -24,7 +23,7 @@ class JsonYamlConverterPage extends HookConsumerWidget {
 
     useEffect(() {
       Future(() {
-        inputController.language = conversionType == JsonYamlConversionType.jsonToYaml ? json : yaml;
+        inputController.language = conversionType == JsonCsvConversionType.jsonToCsv ? json : yaml;
         inputController.addListener(() {
           ref.read(inputTextProvider.notifier).state = inputController.text;
         });
@@ -35,7 +34,7 @@ class JsonYamlConverterPage extends HookConsumerWidget {
 
     useEffect(() {
       Future(() {
-        outputController.language = conversionType == JsonYamlConversionType.jsonToYaml ? yaml : json;
+        outputController.language = conversionType == JsonCsvConversionType.jsonToCsv ? yaml : json;
         return outputController.text = ref.watch(outputTextProvider);
       });
       return;
@@ -46,7 +45,7 @@ class JsonYamlConverterPage extends HookConsumerWidget {
       child: ListView(children: [
         Container(
           margin: const EdgeInsets.all(8.0),
-          child: YaruSection(headline: "configuration", children: [
+          child: YaruSection(headline: "Configuration", children: [
             YaruRow(
               enabled: true,
               leadingWidget: const Icon(
@@ -56,17 +55,17 @@ class JsonYamlConverterPage extends HookConsumerWidget {
               trailingWidget: const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "conversion_type",
+                  "Conversion Type",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              actionWidget: DropdownButton<JsonYamlConversionType>(
+              actionWidget: DropdownButton<JsonCsvConversionType>(
                   value: ref.watch(conversionTypeProvider),
-                  items: getDropdownMenuItems<JsonYamlConversionType>(JsonYamlConversionType.values),
+                  items: getDropdownMenuItems<JsonCsvConversionType>(JsonCsvConversionType.values),
                   onChanged: (selected) => ref.watch(conversionTypeProvider.notifier).state = selected!),
             ),
             Visibility(
-                visible: ref.watch(conversionTypeProvider) == JsonYamlConversionType.yamlToJson,
+                visible: ref.watch(conversionTypeProvider) == JsonCsvConversionType.csvToJson,
                 child: Column(children: [
                   YaruRow(
                     enabled: true,
@@ -84,32 +83,32 @@ class JsonYamlConverterPage extends HookConsumerWidget {
                         onChanged: (selected) => ref.read(indentationProvider.notifier).state = selected!),
                   ),
                 ])),
-            Visibility(
-                visible: ref.watch(conversionTypeProvider) == JsonYamlConversionType.jsonToYaml,
-                child: Column(children: [
-                  YaruRow(
-                    enabled: true,
-                    leadingWidget: const Icon(Icons.arrow_right_alt),
-                    trailingWidget: const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        "yaml_style",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    actionWidget: DropdownButton<YamlStyle>(
-                        value: ref.watch(yamlStyleProvider),
-                        items: getYamlStyleDropdownMenuItems(),
-                        onChanged: (selected) => ref.read(yamlStyleProvider.notifier).state = selected!),
-                  ),
-                ])),
+            // Visibility(
+            //     visible: ref.watch(conversionTypeProvider) == JsonCsvConversionType.jsonToCsv,
+            //     child: Column(children: [
+            //       YaruRow(
+            //         enabled: true,
+            //         leadingWidget: const Icon(Icons.arrow_right_alt),
+            //         trailingWidget: const Padding(
+            //           padding: EdgeInsets.only(left: 8.0),
+            //           child: Text(
+            //             "yaml_style",
+            //             style: TextStyle(fontSize: 18),
+            //           ),
+            //         ),
+            //         actionWidget: DropdownButton<YamlStyle>(
+            //             value: ref.watch(yamlStyleProvider),
+            //             items: getYamlStyleDropdownMenuItems(),
+            //             onChanged: (selected) => ref.read(yamlStyleProvider.notifier).state = selected!),
+            //       ),
+            //     ])),
             YaruRow(
               enabled: true,
               leadingWidget: const Icon(Icons.sort_by_alpha),
               trailingWidget: const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "sort_properties_alphabetically",
+                  "Sort properties alphabetically",
                   style: TextStyle(fontSize: 18),
                 ),
               ),

@@ -5,7 +5,6 @@ import 'package:devlab_flutter/src/converters/json_to_sql/helpers/table_field.da
 import 'package:devlab_flutter/src/converters/json_to_sql/json_to_sql_converter_providers.dart';
 import 'package:devlab_flutter/src/helpers.dart';
 import 'package:devlab_flutter/src/widgets/io_editor/code_editor_wrapper.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:highlight/languages/json.dart';
@@ -74,14 +73,14 @@ class _Fields extends ConsumerWidget {
                       onChanged: (value) {
                         ref.read(fieldListProvider.notifier).setFieldName(fieldId: fields[index].fieldId, name: value);
                       },
-                      decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: "field_name"),
+                      decoration: const InputDecoration(border: UnderlineInputBorder(), labelText: "field_name"),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     width: MediaQuery.of(context).size.width / 8,
                     child: DropdownButtonFormField<DataType>(
-                        decoration: InputDecoration(labelText: 'data_type', border: const UnderlineInputBorder()),
+                        decoration: const InputDecoration(labelText: 'data_type', border: UnderlineInputBorder()),
                         value: fields[index].dataType,
                         items: getDropdownMenuItems<DataType>(DataType.values),
                         onChanged: (selected) {
@@ -103,7 +102,7 @@ class _Fields extends ConsumerWidget {
                               .read(fieldListProvider.notifier)
                               .setFieldLength(fieldId: fields[index].fieldId, length: int.tryParse(value));
                         },
-                        decoration: InputDecoration(border: const UnderlineInputBorder(), hintText: "MAX", labelText: "length"),
+                        decoration: const InputDecoration(border: UnderlineInputBorder(), hintText: "MAX", labelText: "Length"),
                       ),
                     ),
                   ),
@@ -115,7 +114,7 @@ class _Fields extends ConsumerWidget {
                         onChanged: (value) {
                           ref.read(fieldListProvider.notifier).setFieldEnabled(fieldId: fields[index].fieldId, enabled: value);
                         },
-                        title: Text("enabled")),
+                        title: const Text("Enabled")),
                   ),
                   Container(
                     padding: const EdgeInsets.all(8.0),
@@ -125,7 +124,7 @@ class _Fields extends ConsumerWidget {
                         onChanged: (value) {
                           ref.read(fieldListProvider.notifier).setFieldRequired(fieldId: fields[index].fieldId, required: value);
                         },
-                        title: Text("required")),
+                        title: const Text("Required")),
                   ),
                   Container(
                     padding: const EdgeInsets.all(8.0),
@@ -137,7 +136,7 @@ class _Fields extends ConsumerWidget {
                               .read(fieldListProvider.notifier)
                               .setFieldPrimaryKey(fieldId: fields[index].fieldId, primaryKey: value);
                         },
-                        title: Text("primary_key")),
+                        title: const Text("Primary Key")),
                   ),
                 ],
               );
@@ -156,7 +155,7 @@ class _Configuration extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return YaruSection(headline: "configuration", children: [
+    return YaruSection(headline: "Configuration", children: [
       YaruRow(
           trailingWidget: Container(
             padding: const EdgeInsets.all(8.0),
@@ -167,7 +166,7 @@ class _Configuration extends ConsumerWidget {
                 onChanged: (value) {
                   ref.read(tableNameProvider.notifier).state = value;
                 },
-                decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: "table_name"),
+                decoration: const InputDecoration(border: UnderlineInputBorder(), labelText: "Table Name"),
               ),
             ),
           ),
@@ -297,7 +296,9 @@ Widget _buildInvalidJsonData(BuildContext context) {
         padding: const EdgeInsets.all(8.0),
         child: Center(
             child: Text(
-          "json_to_sql_invalid_json_data",
+          """|-
+  Invalid JSON data.
+  Please input a array with objects like the example above.""",
           style: Theme.of(context).textTheme.bodyLarge,
         )),
       )

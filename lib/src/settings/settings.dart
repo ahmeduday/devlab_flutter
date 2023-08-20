@@ -16,6 +16,8 @@ class Settings {
 
   final bool textEditorDisplayLineNumbers;
 
+  final Color colorSeed;
+
   const Settings(
       {this.favorites = const [],
       this.themeMode = ThemeMode.system,
@@ -25,28 +27,31 @@ class Settings {
       this.textEditorTheme = "vs2015",
       this.textEditorFontSize = 18,
       this.textEditorDisplayLineNumbers = true,
-      this.textEditorFontFamily = "Hack"});
+      this.textEditorFontFamily = "Hack",
+      this.colorSeed = Colors.orange});
 
   Settings copyWith(
       {List<String>? favorites,
       ThemeMode? themeMode,
       bool? highContrast,
       YaruVariant? yaruVariant,
+      Color? colorSeed,
       String? textEditorTheme,
       bool? textEditorWrap,
       double? textEditorFontSize,
       bool? textEditorDisplayLineNumbers,
       String? textEditorFontFamily}) {
     return Settings(
-        themeMode: themeMode ?? this.themeMode,
-        favorites: favorites ?? this.favorites,
-        highContrast: highContrast ?? this.highContrast,
-        textEditorWrap: textEditorWrap ?? this.textEditorWrap,
-        textEditorFontFamily: textEditorFontFamily ?? this.textEditorFontFamily,
-        textEditorFontSize: textEditorFontSize ?? this.textEditorFontSize,
-        textEditorDisplayLineNumbers:
-            textEditorDisplayLineNumbers ?? this.textEditorDisplayLineNumbers,
-        textEditorTheme: textEditorTheme ?? this.textEditorTheme,
-        yaruVariant: yaruVariant ?? this.yaruVariant);
+      themeMode: themeMode ?? this.themeMode,
+      favorites: favorites ?? this.favorites,
+      highContrast: highContrast ?? this.highContrast,
+      textEditorWrap: textEditorWrap ?? this.textEditorWrap,
+      textEditorFontFamily: textEditorFontFamily ?? this.textEditorFontFamily,
+      textEditorFontSize: textEditorFontSize ?? this.textEditorFontSize,
+      textEditorDisplayLineNumbers: textEditorDisplayLineNumbers ?? this.textEditorDisplayLineNumbers,
+      textEditorTheme: textEditorTheme ?? this.textEditorTheme,
+      yaruVariant: yaruVariant ?? this.yaruVariant,
+      colorSeed: colorSeed ?? this.colorSeed,
+    );
   }
 }

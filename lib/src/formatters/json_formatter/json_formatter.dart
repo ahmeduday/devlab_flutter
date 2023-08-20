@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:devlab_flutter/src/formatters/indentation.dart';
 import 'package:devlab_flutter/src/helpers.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 String formatJson(String json, {Indentation indentation = Indentation.fourSpaces, bool sortAlphabetically = false}) {
   dynamic object;
@@ -10,7 +9,7 @@ String formatJson(String json, {Indentation indentation = Indentation.fourSpaces
     json = applyWebSpaceFix(json);
     object = jsonDecode(json);
   } on FormatException catch (_) {
-    return "invalid_json_data";
+    return "Invalid json data";
   }
   if (object != null) {
     if (sortAlphabetically) object = sortJson(object);

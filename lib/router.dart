@@ -1,7 +1,7 @@
 import 'package:devlab_flutter/src/layout/yaru/providers/is_drawer_open_provider.dart';
 import 'package:devlab_flutter/src/layout/yaru/providers/selected_group_provider.dart';
 import 'package:devlab_flutter/src/layout/yaru/providers/selected_tool_provider.dart';
-import 'package:devlab_flutter/src/layout/yaru/ui/yaru_layout.dart';
+import 'package:devlab_flutter/src/layout/yaru/ui/app_layout.dart';
 import 'package:devlab_flutter/src/tools.dart';
 import 'package:devlab_flutter/src/widgets/default_app_bar.dart';
 import 'package:devlab_flutter/src/widgets/default_drawer.dart';
@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 layout({required Widget child}) => ResponsiveWrapper.builder(
-      YaruLayout(
+      AppLayout(
         child: Consumer(
           builder: (context, ref, _) {
             final selectedTool = ref.watch(selectedToolProvider);

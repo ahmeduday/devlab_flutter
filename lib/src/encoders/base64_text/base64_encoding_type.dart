@@ -1,6 +1,6 @@
 import 'package:devlab_flutter/src/described_enum.dart';
 
-enum Base64EncodingType {
+enum Base64EncodingType implements DescribedEnum {
   utf8("UTF-8"),
   ascii("ASCII");
 

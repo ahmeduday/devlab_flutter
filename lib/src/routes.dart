@@ -18,6 +18,7 @@ class Routes {
   static const base64ImageEncoder = '/encoders/base64image';
   static const jsonToClass = '/converters/jsonToClass';
   static const jsonYamlConverter = '/converters/jsonYaml';
+  static const jsonCsvConverter = '/converters/jsonCsv';
   static const timestampConverter = '/converters/timestamp';
   static const cronParser = '/converters/cronParser';
   static const numberBase = '/converters/numberBase';
@@ -25,4 +26,5 @@ class Routes {
   // static const cnpj = '/brazil/cnpj';
   static const textInspector = '/text/inspector';
   static const jsonToSql = '/converters/jsonToSql';
+  static const colorScheme = '/thme/colorCheme';
 }

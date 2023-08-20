@@ -2,7 +2,6 @@ import 'package:devlab_flutter/src/layout/yaru/providers/is_drawer_open_provider
 import 'package:devlab_flutter/src/layout/yaru/providers/selected_tool_provider.dart';
 import 'package:devlab_flutter/src/routes.dart';
 import 'package:devlab_flutter/src/tools.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,24 +40,13 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         actions: [
-          Visibility(
-            visible: kIsWeb,
-            child: IconButton(
-                onPressed: () {
-                  launchUrlString("https://github.com/gumbarros/DevWidgets/releases/tag/latest");
-                },
-                tooltip: "download_desktop_version",
-                icon: const Icon(
-                  Icons.download,
-                )),
-          ),
           Consumer(
             builder: (context, ref, child) => IconButton(
                 onPressed: () {
                   ref.read(selectedToolProvider.notifier).state = getToolByName("settings");
                   context.go(Routes.settings);
                 },
-                tooltip: "settings",
+                tooltip: "Settings",
                 icon: const Icon(
                   Icons.settings,
                 )),

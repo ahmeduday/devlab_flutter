@@ -4,19 +4,45 @@ import 'package:devlab_flutter/src/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart' as responsive;
-import 'package:yaru/yaru.dart';
 
-class YaruLayout extends ConsumerWidget {
+class AppLayout extends ConsumerWidget {
   final Widget? child;
 
-  const YaruLayout({super.key, required this.child});
+  const AppLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, ref) {
     final settings = ref.watch(settingsProvider);
 
-    return YaruTheme(
-      data: YaruThemeData(highContrast: settings.highContrast, variant: settings.yaruVariant, themeMode: settings.themeMode),
+    ThemeData theme(bool highContrast, ThemeMode themeMode) {
+      if (themeMode == ThemeMode.dark) {
+        if (highContrast) {
+          return ThemeData(
+            colorScheme: const ColorScheme.highContrastDark(),
+          );
+        } else {
+          return ThemeData(
+            colorScheme: const ColorScheme.dark(),
+          );
+        }
+      } else {
+        //light mode
+        if (highContrast) {
+          return ThemeData(
+            colorScheme: const ColorScheme.highContrastLight(),
+          );
+        } else {
+          return ThemeData(
+            colorScheme: const ColorScheme.light(),
+          );
+        }
+      }
+    }
+
+    return Theme(
+      data: theme(settings.highContrast, settings.themeMode).copyWith(
+        colorScheme: ColorScheme.fromSeed(seedColor: settings.colorSeed),
+      ), // YaruThemeData(highContrast: settings.highContrast, variant: settings.yaruVariant, themeMode: settings.themeMode),
       child: Scaffold(
         body: Column(
           children: [

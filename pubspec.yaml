@@ -61,7 +61,7 @@ dependencies:
   json2yaml: ^3.0.0
   # json_to_dart: ^1.0.5 // it causes error during pub get
   multi_split_view: ^2.1.0
-  package_info_plus: ^4.0.2
+  package_info_plus: ^4.1.0
   path: ^1.8.2
   path_provider: ^2.0.11
   pretty_diff_text: ^1.0.0
@@ -76,6 +76,8 @@ dependencies:
   yaru_colors: ^0.1.0
   yaru_widgets: ^1.1.2
   json_dart_generator: ^1.1.0+1
+  flutter_colorpicker: ^1.0.3
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

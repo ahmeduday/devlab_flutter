@@ -1,6 +1,6 @@
 import 'package:devlab_flutter/src/described_enum.dart';
 
-enum UuidType {
+enum UuidType implements DescribedEnum {
   v1("v1"),
   v4("v4");
 

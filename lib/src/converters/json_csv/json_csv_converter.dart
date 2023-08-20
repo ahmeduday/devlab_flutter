@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:devlab_flutter/src/converters/json_csv/json2csv.dart';
 import 'package:devlab_flutter/src/formatters/json_formatter/json_formatter.dart';
 import 'package:devlab_flutter/src/formatters/indentation.dart';
 import 'package:devlab_flutter/src/helpers.dart';
-import 'package:json2yaml/json2yaml.dart';
 import 'package:yaml/yaml.dart';
 
-String convertJsonToYaml(String text, {required YamlStyle yamlStyle, required bool sortAlphabetically}) {
+String convertJsonToCsv(String text, {required bool sortAlphabetically}) {
   text = applyWebSpaceFix(text);
 
   try {
@@ -14,20 +14,23 @@ String convertJsonToYaml(String text, {required YamlStyle yamlStyle, required bo
       json = sortJson(json);
       json = jsonDecode(const JsonEncoder().convert(json));
     }
-    return json2yaml(json, yamlStyle: yamlStyle);
+    return jsonToCsv(
+      json,
+    );
   } on FormatException catch (_) {
     return "invalid_data";
   }
 }
 
-String convertYamlToJson(String text, {Indentation? indentation, required bool sortAlphabetically}) {
+String convertCsvToJson(String text, {Indentation? indentation, required bool sortAlphabetically}) {
   text = applyWebSpaceFix(text);
 
   try {
-    final yaml = loadYaml(text);
+    final csv = csvToJson(text);
 
-    return formatJson(jsonEncode(yaml), indentation: indentation ?? Indentation.fourSpaces, sortAlphabetically: sortAlphabetically);
+    // return formatJson(jsonEncode(csv), indentation: indentation ?? Indentation.fourSpaces, sortAlphabetically: sortAlphabetically);
+    return csv;
   } on YamlException catch (_) {
-    return "invalid_yaml_data";
+    return "Invalid CSV data";
   }
 }

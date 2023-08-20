@@ -1,6 +1,6 @@
 import 'package:devlab_flutter/src/described_enum.dart';
 
-enum DataType {
+enum DataType implements DescribedEnum {
   integer("Integer"),
   number("Number"),
   dateTime("DateTime"),

@@ -5,8 +5,6 @@ import 'package:devlab_flutter/tool.dart';
 import 'package:devlab_flutter/src/routes.dart';
 import 'package:flutter/material.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
 class JsonYamlConverterTool implements Tool {
   const JsonYamlConverterTool() : super();
 
@@ -14,13 +12,13 @@ class JsonYamlConverterTool implements Tool {
   IconData get icon => Icons.compare_arrows;
 
   @override
-  String get fullTitle => "json_yaml converter";
+  String get fullTitle => "JSON <> YAML";
 
   @override
   String get route => Routes.jsonYamlConverter;
 
   @override
-  String get description => "json_yaml_converter description";
+  String get description => "Convert JSON data to YAML and vice versa";
 
   @override
   Group get group => const ConvertersGroup();
@@ -29,7 +27,7 @@ class JsonYamlConverterTool implements Tool {
   String get name => "jsonYaml";
 
   @override
-  String get shortTitle => "json_yaml converter";
+  String get shortTitle => "JSON <> YAML";
 
   @override
   Widget get page => const JsonYamlConverterPage();

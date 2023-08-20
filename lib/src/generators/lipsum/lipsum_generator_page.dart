@@ -4,7 +4,6 @@ import 'package:devlab_flutter/src/helpers.dart';
 import 'package:devlab_flutter/src/widgets/io_editor/output_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yaru_widgets/yaru_widgets.dart';
@@ -31,9 +30,11 @@ class LipsumGeneratorPage extends HookConsumerWidget {
               YaruRow(
                 enabled: true,
                 leadingWidget: const Icon(Icons.width_normal),
-                trailingWidget: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("lipsum generator mode"), subtitle: Text("lipsum_generator mode description")),
+                trailingWidget: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: ListTile(
+                      title: Text("Generator mode"),
+                      subtitle: Text("Generate words, sentences or paragraphs with lorem ipsum text")),
                 ),
                 actionWidget: DropdownButton<LipsumType>(
                     value: ref.watch(lipsumTypeProvider),
@@ -43,8 +44,8 @@ class LipsumGeneratorPage extends HookConsumerWidget {
               YaruRow(
                 enabled: true,
                 leadingWidget: const Icon(Icons.fork_right),
-                trailingWidget: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                trailingWidget: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                     title: Text("lipsum start with"),
                   ),
@@ -57,11 +58,11 @@ class LipsumGeneratorPage extends HookConsumerWidget {
               YaruRow(
                 enabled: true,
                 leadingWidget: const Icon(Icons.tag),
-                trailingWidget: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                trailingWidget: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
-                    title: Text("amount"),
-                    subtitle: Text("lipsum amount description"),
+                    title: Text("Amount"),
+                    subtitle: Text("Amount of words, sentences or paragraphs to be generated"),
                   ),
                 ),
                 actionWidget: Flexible(

@@ -1,3 +1,4 @@
+import 'package:devlab_flutter/new_licences.dart';
 import 'package:devlab_flutter/router.dart';
 // import 'package:devlab_flutter/supported_locales.dart';
 // import 'package:easy_localization/easy_localization.dart';
@@ -12,6 +13,7 @@ Future<void> ensureInitialized() async {
   await Hive.openBox('settings');
   // EasyLocalization.logger.enableLevels = [];
   // await EasyLocalization.ensureInitialized();
+  addLicenses();
 }
 
 Future<void> main() async {
@@ -44,6 +46,10 @@ class _MainState extends State<Main> {
       // localizationsDelegates: context.localizationDelegates,
       // supportedLocales: context.supportedLocales,
       // locale: context.locale,
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+      //   useMaterial3: true,
+      // ),
       title: "Dev Lab",
     ));
   }
