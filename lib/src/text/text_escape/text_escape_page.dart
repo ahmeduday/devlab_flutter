@@ -42,26 +42,26 @@ class TextEscapePage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("Configuration"), child:
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.compare_arrows_sharp),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                      title: Text("conversion"),
-                      subtitle: Text("Conversion Mode")),
-                ),
-                title: DropdownButton<EscapeConversionMode>(
-                    value: ref.watch(escapeConversionModeProvider),
-                    items: getDropdownMenuItems<EscapeConversionMode>(
-                        EscapeConversionMode.values),
-                    onChanged: (selected) {
-                      ref.read(escapeConversionModeProvider.notifier).state =
-                          selected ?? EscapeConversionMode.escape;
-                    }),
-              )
-            ]),
+            child: YaruSection(
+                headline: const Text("Configuration"),
+                child: YaruTile(
+                  enabled: true,
+                  leading: const Icon(Icons.compare_arrows_sharp),
+                  trailing: const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: ListTile(
+                        title: Text("conversion"),
+                        subtitle: Text("Conversion Mode")),
+                  ),
+                  title: DropdownButton<EscapeConversionMode>(
+                      value: ref.watch(escapeConversionModeProvider),
+                      items: getDropdownMenuItems<EscapeConversionMode>(
+                          EscapeConversionMode.values),
+                      onChanged: (selected) {
+                        ref.read(escapeConversionModeProvider.notifier).state =
+                            selected ?? EscapeConversionMode.escape;
+                      }),
+                )),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height / 1.2,

@@ -26,96 +26,103 @@ class UuidGeneratorPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("configuration"), child:
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.tag),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                    title: Text("uuid_type"),
-                    subtitle: Text("uuid type description"),
+            child: YaruSection(
+              headline: const Text("configuration"),
+              child: Row(
+                children: [
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.tag),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: ListTile(
+                        title: Text("uuid_type"),
+                        subtitle: Text("uuid type description"),
+                      ),
+                    ),
+                    title: DropdownButton<UuidType>(
+                        value: ref.watch(uuidTypeProvider),
+                        items: getDropdownMenuItems<UuidType>(UuidType.values),
+                        onChanged: (selected) => ref
+                            .read(uuidTypeProvider.notifier)
+                            .state = selected!),
                   ),
-                ),
-                title: DropdownButton<UuidType>(
-                    value: ref.watch(uuidTypeProvider),
-                    items: getDropdownMenuItems<UuidType>(UuidType.values),
-                    onChanged: (selected) =>
-                        ref.read(uuidTypeProvider.notifier).state = selected!),
-              ),
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.remove),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                    title: Text("hyphens"),
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.remove),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: ListTile(
+                        title: Text("hyphens"),
+                      ),
+                    ),
+                    title: Switch(
+                      onChanged: (value) =>
+                          ref.read(hiphensProvider.notifier).state = value,
+                      value: ref.watch(hiphensProvider),
+                    ),
                   ),
-                ),
-                title: Switch(
-                  onChanged: (value) =>
-                      ref.read(hiphensProvider.notifier).state = value,
-                  value: ref.watch(hiphensProvider),
-                ),
-              ),
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.format_color_text),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 2.0),
-                  child: ListTile(title: Text("Uppercase")),
-                ),
-                title: Switch(
-                  onChanged: (value) =>
-                      ref.read(uppercaseProvider.notifier).state = value,
-                  value: ref.watch(uppercaseProvider),
-                ),
-              ),
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.format_list_numbered),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("Amount")),
-                ),
-                title: Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          textAlign: TextAlign.end,
-                          initialValue: ref.watch(amountProvider).toString(),
-                          onChanged: (value) {
-                            ref.read(amountProvider.notifier).state =
-                                int.tryParse(value) ?? 0;
-                          },
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(),
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.format_color_text),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 2.0),
+                      child: ListTile(title: Text("Uppercase")),
+                    ),
+                    title: Switch(
+                      onChanged: (value) =>
+                          ref.read(uppercaseProvider.notifier).state = value,
+                      value: ref.watch(uppercaseProvider),
+                    ),
+                  ),
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.format_list_numbered),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: ListTile(title: Text("Amount")),
+                    ),
+                    title: Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              textAlign: TextAlign.end,
+                              initialValue:
+                                  ref.watch(amountProvider).toString(),
+                              onChanged: (value) {
+                                ref.read(amountProvider.notifier).state =
+                                    int.tryParse(value) ?? 0;
+                              },
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            flex: 2,
+                            child: ElevatedButton(
+                              onPressed: () => ref
+                                  .read(uuidGeneratorProvider.notifier)
+                                  .generate(),
+                              child: const Text("Generate"),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Flexible(
-                        flex: 2,
-                        child: ElevatedButton(
-                          onPressed: () => ref
-                              .read(uuidGeneratorProvider.notifier)
-                              .generate(),
-                          child: const Text("Generate"),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ]),
+            ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height / 1.2,

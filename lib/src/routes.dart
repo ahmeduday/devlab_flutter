@@ -3,6 +3,7 @@ class Routes {
 
   static const uuidGenerator = '/generators/uuid';
   static const lipsumGenerator = '/generators/lipsum';
+  static const dartJsonGenerator = '/generators/dartJson';
   static const sqlFormatter = '/formatters/sql';
   static const jsonFormatter = '/formatters/json';
   static const xmlFormatter = '/formatters/xml';

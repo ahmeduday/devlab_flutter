@@ -11,7 +11,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:pretty_diff_text/pretty_diff_text.dart';
 import 'package:yaru/yaru.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class TextDiffPage extends HookConsumerWidget {
   const TextDiffPage({Key? key}) : super(key: key);
@@ -51,56 +50,61 @@ class TextDiffPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("configuration"), child:
-              RadioListTile<DiffCleanupType>(
-                  title: Text("semantic_cleanup"),
-                  subtitle: Text("semantic cleanup description"),
-                  value: DiffCleanupType.SEMANTIC,
-                  groupValue: ref.watch(diffCleanupTypeProvider),
-                  onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state =
-                        value ?? DiffCleanupType.EFFICIENCY;
-                  }),
-              RadioListTile(
-                  title: Row(
-                    children: [
-                      Text("${"efficiency_cleanup"}.${"edit_cost"}:"),
-                      SizedBox(
-                          width: 40,
-                          height: 30,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            onChanged: (value) {
-                              ref.read(editCostProvider.notifier).state =
-                                  int.tryParse(value) ?? 4;
-                            },
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(5),
-                              border: OutlineInputBorder(),
-                            ),
-                          ))
-                    ],
-                  ),
-                  subtitle: Text("efficiency cleanup description"),
-                  value: DiffCleanupType.EFFICIENCY,
-                  groupValue: ref.watch(diffCleanupTypeProvider),
-                  onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state =
-                        value ?? DiffCleanupType.EFFICIENCY;
-                  }),
-              RadioListTile(
-                  title: Text("no_cleanup"),
-                  subtitle: Text("no cleanup description"),
-                  value: DiffCleanupType.NONE,
-                  groupValue: ref.watch(diffCleanupTypeProvider),
-                  onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state =
-                        value ?? DiffCleanupType.EFFICIENCY;
-                  }),
-            ]),
+            child: YaruSection(
+              headline: const Text("configuration"),
+              child: Row(
+                children: [
+                  RadioListTile<DiffCleanupType>(
+                      title: const Text("semantic_cleanup"),
+                      subtitle: const Text("semantic cleanup description"),
+                      value: DiffCleanupType.SEMANTIC,
+                      groupValue: ref.watch(diffCleanupTypeProvider),
+                      onChanged: (DiffCleanupType? value) {
+                        ref.read(diffCleanupTypeProvider.notifier).state =
+                            value ?? DiffCleanupType.EFFICIENCY;
+                      }),
+                  RadioListTile(
+                      title: Row(
+                        children: [
+                          const Text("${"efficiency_cleanup"}.${"edit_cost"}:"),
+                          SizedBox(
+                              width: 40,
+                              height: 30,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                onChanged: (value) {
+                                  ref.read(editCostProvider.notifier).state =
+                                      int.tryParse(value) ?? 4;
+                                },
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(5),
+                                  border: OutlineInputBorder(),
+                                ),
+                              ))
+                        ],
+                      ),
+                      subtitle: const Text("efficiency cleanup description"),
+                      value: DiffCleanupType.EFFICIENCY,
+                      groupValue: ref.watch(diffCleanupTypeProvider),
+                      onChanged: (DiffCleanupType? value) {
+                        ref.read(diffCleanupTypeProvider.notifier).state =
+                            value ?? DiffCleanupType.EFFICIENCY;
+                      }),
+                  RadioListTile(
+                      title: const Text("no_cleanup"),
+                      subtitle: const Text("no cleanup description"),
+                      value: DiffCleanupType.NONE,
+                      groupValue: ref.watch(diffCleanupTypeProvider),
+                      onChanged: (DiffCleanupType? value) {
+                        ref.read(diffCleanupTypeProvider.notifier).state =
+                            value ?? DiffCleanupType.EFFICIENCY;
+                      }),
+                ],
+              ),
+            ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height / 2.5,
@@ -139,8 +143,7 @@ class TextDiffPage extends HookConsumerWidget {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: YaruDialogTitle(
-                        closeIconData: Icons.close, title: "difference"),
+                    title: const YaruDialogTitleBar(title: Text("difference")),
                     content: _Diff(settings: settings, isDialog: true),
                   );
                 },

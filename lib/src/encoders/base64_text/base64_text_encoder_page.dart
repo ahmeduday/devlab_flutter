@@ -39,53 +39,61 @@ class Base64TextEncoderPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("Configuration"), child:
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.compare_arrows_sharp),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                      title: Text("Conversion"),
-                      subtitle:
-                          Text("Select which conversion mode you want to use")),
-                ),
-                title: DropdownButton<ConversionMode>(
-                    value: ref.watch(conversionModeProvider),
-                    items: getDropdownMenuItems<ConversionMode>(
-                        ConversionMode.values),
-                    onChanged: (selected) {
-                      ref.read(conversionModeProvider.notifier).state =
-                          selected!;
-                    }),
+            child: YaruSection(
+              headline: const Text("Configuration"),
+              child: Row(
+                children: [
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.compare_arrows_sharp),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: ListTile(
+                          title: Text("Conversion"),
+                          subtitle: Text(
+                              "Select which conversion mode you want to use")),
+                    ),
+                    title: DropdownButton<ConversionMode>(
+                        value: ref.watch(conversionModeProvider),
+                        items: getDropdownMenuItems<ConversionMode>(
+                            ConversionMode.values),
+                        onChanged: (selected) {
+                          ref.read(conversionModeProvider.notifier).state =
+                              selected!;
+                        }),
+                  ),
+                  YaruTile(
+                    enabled: true,
+                    leading: const Icon(Icons.grid_3x3),
+                    trailing: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: ListTile(
+                          title: Text("Encoding"),
+                          subtitle:
+                              Text("Select which encoding you want to use")),
+                    ),
+                    title: DropdownButton<Base64EncodingType>(
+                        value: ref.watch(encodingTypeProvider),
+                        items: getDropdownMenuItems<Base64EncodingType>(
+                            Base64EncodingType.values),
+                        onChanged: (selected) {
+                          ref.read(encodingTypeProvider.notifier).state =
+                              selected!;
+                        }),
+                  ),
+                ],
               ),
-              YaruTile(
-                enabled: true,
-                leading: const Icon(Icons.grid_3x3),
-                trailing: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                      title: Text("Encoding"),
-                      subtitle: Text("Select which encoding you want to use")),
-                ),
-                title: DropdownButton<Base64EncodingType>(
-                    value: ref.watch(encodingTypeProvider),
-                    items: getDropdownMenuItems<Base64EncodingType>(
-                        Base64EncodingType.values),
-                    onChanged: (selected) {
-                      ref.read(encodingTypeProvider.notifier).state = selected!;
-                    }),
-              )
-            ]),
+            ),
           ),
           SizedBox(
-              height: MediaQuery.of(context).size.height / 1.2,
-              child: IOEditor(
-                inputController: inputController,
-                usesCodeControllers: false,
-                outputController: outputController,
-                isVerticalLayout: true,
-              )),
+            height: MediaQuery.of(context).size.height / 1.2,
+            child: IOEditor(
+              inputController: inputController,
+              usesCodeControllers: false,
+              outputController: outputController,
+              isVerticalLayout: true,
+            ),
+          ),
         ],
       ),
     );

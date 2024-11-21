@@ -44,8 +44,9 @@ class SqlFormatterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("Configuration"), child:
-              YaruTile(
+            child: YaruSection(
+              headline: const Text("Configuration"),
+              child: YaruTile(
                 enabled: true,
                 leading: const Icon(
                   Icons.code,
@@ -65,7 +66,7 @@ class SqlFormatterPage extends HookConsumerWidget {
                         .read(sqlDialectProvider.notifier)
                         .state = selected!),
               ),
-            ]),
+            ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height / 1.2,

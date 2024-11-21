@@ -45,15 +45,16 @@ class XmlFormatterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: const Text("configuration"), child:
-              YaruTile(
+            child: YaruSection(
+              headline: const Text("configuration"),
+              child: YaruTile(
                 enabled: true,
                 leading: const Icon(Icons.arrow_right_alt),
-                trailing: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                trailing: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
                   child: Text(
                     "indentation",
-                    style: const TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
                 title: DropdownButton<Indentation>(
@@ -64,7 +65,7 @@ class XmlFormatterPage extends HookConsumerWidget {
                         .read(indentationProvider.notifier)
                         .state = selected!),
               ),
-            ]),
+            ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height / 1.2,

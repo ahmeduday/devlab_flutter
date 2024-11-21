@@ -1,6 +1,5 @@
 import 'package:devlab_flutter/src/generators/lipsum/lipsum_type.dart';
 import 'package:ipsum/ipsum.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 String generateLipsum({
   LipsumType type = LipsumType.words,
