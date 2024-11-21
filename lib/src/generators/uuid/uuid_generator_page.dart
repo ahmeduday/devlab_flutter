@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class UuidGeneratorPage extends HookConsumerWidget {
   const UuidGeneratorPage({Key? key}) : super(key: key);
@@ -26,56 +26,59 @@ class UuidGeneratorPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.tag),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.tag),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                     title: Text("uuid_type"),
                     subtitle: Text("uuid type description"),
                   ),
                 ),
-                actionWidget: DropdownButton<UuidType>(
+                title: DropdownButton<UuidType>(
                     value: ref.watch(uuidTypeProvider),
                     items: getDropdownMenuItems<UuidType>(UuidType.values),
-                    onChanged: (selected) => ref.read(uuidTypeProvider.notifier).state = selected!),
+                    onChanged: (selected) =>
+                        ref.read(uuidTypeProvider.notifier).state = selected!),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.remove),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.remove),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                     title: Text("hyphens"),
                   ),
                 ),
-                actionWidget: Switch(
-                  onChanged: (value) => ref.read(hiphensProvider.notifier).state = value,
+                title: Switch(
+                  onChanged: (value) =>
+                      ref.read(hiphensProvider.notifier).state = value,
                   value: ref.watch(hiphensProvider),
                 ),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.format_color_text),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.format_color_text),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 2.0),
                   child: ListTile(title: Text("Uppercase")),
                 ),
-                actionWidget: Switch(
-                  onChanged: (value) => ref.read(uppercaseProvider.notifier).state = value,
+                title: Switch(
+                  onChanged: (value) =>
+                      ref.read(uppercaseProvider.notifier).state = value,
                   value: ref.watch(uppercaseProvider),
                 ),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.format_list_numbered),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.format_list_numbered),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(title: Text("Amount")),
                 ),
-                actionWidget: Flexible(
+                title: Flexible(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -83,11 +86,14 @@ class UuidGeneratorPage extends HookConsumerWidget {
                         flex: 1,
                         child: TextFormField(
                           keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           textAlign: TextAlign.end,
                           initialValue: ref.watch(amountProvider).toString(),
                           onChanged: (value) {
-                            ref.read(amountProvider.notifier).state = int.tryParse(value) ?? 0;
+                            ref.read(amountProvider.notifier).state =
+                                int.tryParse(value) ?? 0;
                           },
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(10),
@@ -99,7 +105,9 @@ class UuidGeneratorPage extends HookConsumerWidget {
                       Flexible(
                         flex: 2,
                         child: ElevatedButton(
-                          onPressed: () => ref.read(uuidGeneratorProvider.notifier).generate(),
+                          onPressed: () => ref
+                              .read(uuidGeneratorProvider.notifier)
+                              .generate(),
                           child: const Text("Generate"),
                         ),
                       ),
@@ -117,7 +125,8 @@ class UuidGeneratorPage extends HookConsumerWidget {
                   ElevatedButton.icon(
                     icon: const Icon(Icons.clear),
                     label: const Text("Clear"),
-                    onPressed: () => ref.read(uuidGeneratorProvider.notifier).clear(),
+                    onPressed: () =>
+                        ref.read(uuidGeneratorProvider.notifier).clear(),
                   ),
                 ],
               )),

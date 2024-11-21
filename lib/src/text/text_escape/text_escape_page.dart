@@ -5,7 +5,7 @@ import 'package:devlab_flutter/src/widgets/io_editor/io_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class TextEscapePage extends HookConsumerWidget {
   const TextEscapePage({Key? key}) : super(key: key);
@@ -42,19 +42,23 @@ class TextEscapePage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "Configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("Configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.compare_arrows_sharp),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.compare_arrows_sharp),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("conversion"), subtitle: Text("Conversion Mode")),
+                  child: ListTile(
+                      title: Text("conversion"),
+                      subtitle: Text("Conversion Mode")),
                 ),
-                actionWidget: DropdownButton<EscapeConversionMode>(
+                title: DropdownButton<EscapeConversionMode>(
                     value: ref.watch(escapeConversionModeProvider),
-                    items: getDropdownMenuItems<EscapeConversionMode>(EscapeConversionMode.values),
+                    items: getDropdownMenuItems<EscapeConversionMode>(
+                        EscapeConversionMode.values),
                     onChanged: (selected) {
-                      ref.read(escapeConversionModeProvider.notifier).state = selected ?? EscapeConversionMode.escape;
+                      ref.read(escapeConversionModeProvider.notifier).state =
+                          selected ?? EscapeConversionMode.escape;
                     }),
               )
             ]),

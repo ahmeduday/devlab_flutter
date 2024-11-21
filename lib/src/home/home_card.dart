@@ -5,7 +5,7 @@ import 'package:devlab_flutter/src/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class HomeCard extends StatelessWidget {
   final isFavoriteVisibleProvider = StateProvider<bool>((ref) => false);
@@ -23,8 +23,10 @@ class HomeCard extends StatelessWidget {
           final isFavoriteVisible = ref.watch(isFavoriteVisibleProvider);
 
           return MouseRegion(
-            onEnter: (_) => ref.read(isFavoriteVisibleProvider.notifier).state = true,
-            onExit: (_) => ref.read(isFavoriteVisibleProvider.notifier).state = false,
+            onEnter: (_) =>
+                ref.read(isFavoriteVisibleProvider.notifier).state = true,
+            onExit: (_) =>
+                ref.read(isFavoriteVisibleProvider.notifier).state = false,
             child: YaruSelectableContainer(
               padding: const EdgeInsets.all(10),
               onTap: () {
@@ -66,12 +68,17 @@ class HomeCard extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
-                            icon: Icon(isFavorite ? Icons.star : Icons.star_border),
+                            icon: Icon(
+                                isFavorite ? Icons.star : Icons.star_border),
                             onPressed: () async {
                               if (isFavorite) {
-                                ref.read(settingsProvider.notifier).removeFavorite(tool.name);
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .removeFavorite(tool.name);
                               } else {
-                                ref.read(settingsProvider.notifier).addFavorite(tool.name);
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .addFavorite(tool.name);
                               }
                             },
                           ),

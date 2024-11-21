@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_grid.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class FlutterColorsPage extends HookConsumerWidget {
   FlutterColorsPage({super.key}) {
@@ -22,13 +22,14 @@ class FlutterColorsPage extends HookConsumerWidget {
           children: [
             Container(
                 margin: const EdgeInsets.all(8.0),
-                child: YaruSection(headline: 'Selector', children: [
-                  YaruRow(
-                      leadingWidget: const Icon(
+                child: YaruSection(
+                  headline: const Text('Selector'),
+                  child: YaruTile(
+                      leading: const Icon(
                         Icons.color_lens,
                         size: 25,
                       ),
-                      trailingWidget: const Padding(
+                      title: const Padding(
                         padding: EdgeInsets.only(left: 8.0),
                         child: Text(
                           "Select Color Seed",
@@ -37,16 +38,20 @@ class FlutterColorsPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                      actionWidget: ElevatedButton(
-                        style: ElevatedButton.styleFrom(backgroundColor: con.selectedColor.value), // ref.watch(selectedColor));
-                        onPressed: () => showColorDialog(context, ref, con.selectedColor.value),
+                      trailing: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: con.selectedColor
+                                .value), // ref.watch(selectedColor));
+                        onPressed: () => showColorDialog(
+                            context, ref, con.selectedColor.value),
                         child: Text(
-                          con.selectedColor.value.toString(), // ref.watch(selectedColor).value.toString(),
+                          con.selectedColor.value
+                              .toString(), // ref.watch(selectedColor).value.toString(),
                           style: const TextStyle(color: Colors.black),
                         ),
                       ),
                       enabled: true),
-                ])),
+                )),
             SizedBox(
               height: MediaQuery.of(context).size.height / 1.2,
               child: ResponsiveGridView.builder(
@@ -60,11 +65,15 @@ class FlutterColorsPage extends HookConsumerWidget {
                     maxCrossAxisExtent: 300,
                     minCrossAxisExtent: 300),
                 itemBuilder: (BuildContext context, int index) => Card(
-                  color: con.containerColorProvider[index], // ref.watch(containerColorProvider)[index],
+                  color: con.containerColorProvider[
+                      index], // ref.watch(containerColorProvider)[index],
                   child: Center(
                     child: Text(
-                      con.namesProvider[index], // ref.watch(namesProvider)[index],
-                      style: TextStyle(color: con.textColorProvider[index]), // ref.watch(textColorProvider)[index]);
+                      con.namesProvider[
+                          index], // ref.watch(namesProvider)[index],
+                      style: TextStyle(
+                          color: con.textColorProvider[
+                              index]), // ref.watch(textColorProvider)[index]);
                     ),
                   ),
                 ),

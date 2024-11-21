@@ -6,7 +6,7 @@ import 'package:devlab_flutter/src/widgets/io_editor/io_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 import 'package:highlight/languages/sql.dart';
 
 class SqlFormatterPage extends HookConsumerWidget {
@@ -44,24 +44,26 @@ class SqlFormatterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "Configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("Configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(
+                leading: const Icon(
                   Icons.code,
                   size: 25,
                 ),
-                trailingWidget: const Padding(
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: Text(
                     "Dialect",
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                actionWidget: DropdownButton<SqlDialect>(
+                title: DropdownButton<SqlDialect>(
                     value: ref.watch(sqlDialectProvider),
                     items: getDropdownMenuItems<SqlDialect>(SqlDialect.values),
-                    onChanged: (selected) => ref.read(sqlDialectProvider.notifier).state = selected!),
+                    onChanged: (selected) => ref
+                        .read(sqlDialectProvider.notifier)
+                        .state = selected!),
               ),
             ]),
           ),

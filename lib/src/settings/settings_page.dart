@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yaru/yaru.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -36,31 +36,31 @@ class _ApplicationSettings extends ConsumerWidget {
 
     return Container(
       margin: const EdgeInsets.all(8.0),
-      child: YaruSection(headline: "Application", children: [
-        // YaruRow(
+      child: YaruSection(headline: const Text("Application"), child:
+        // YaruTile(
         //   enabled: true,
         //   padding: const EdgeInsets.all(8.0),
-        //   leadingWidget: const Icon(Icons.public),
-        //   trailingWidget: Text(
+        //   leading: const Icon(Icons.public),
+        //   trailing: Text(
         //     "language",
         //     style: const TextStyle(fontSize: 18),
         //   ),
-        //   actionWidget: DropdownButton<Locale>(
+        //   title: DropdownButton<Locale>(
         //       value: context.locale,
         //       onChanged: (value) {
         //         ref.read(settingsProvider.notifier).setLocale(context, value ?? const Locale("en_US"));
         //       },
         //       items: _getLanguageDropdownMenuItems()),
         // ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.dark_mode),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.dark_mode),
+          trailing: const Text(
             "Brightness",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: DropdownButton<ThemeMode>(
+          title: DropdownButton<ThemeMode>(
               value: settings.themeMode,
               items: const [
                 DropdownMenuItem(
@@ -77,33 +77,35 @@ class _ApplicationSettings extends ConsumerWidget {
                 ),
               ],
               onChanged: (value) {
-                ref.read(settingsProvider.notifier).setThemeMode(value ?? ThemeMode.system);
+                ref
+                    .read(settingsProvider.notifier)
+                    .setThemeMode(value ?? ThemeMode.system);
               }),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.accessibility),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.accessibility),
+          trailing: const Text(
             "High Contrast",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: Switch(
+          title: Switch(
             onChanged: (bool value) {
               ref.read(settingsProvider.notifier).setHighContrast(value);
             },
             value: settings.highContrast,
           ),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.brush),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.brush),
+          trailing: const Text(
             "Primary Color",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: Flexible(
+          title: Flexible(
             child: Wrap(
               crossAxisAlignment: WrapCrossAlignment.start,
               alignment: WrapAlignment.start,
@@ -111,7 +113,9 @@ class _ApplicationSettings extends ConsumerWidget {
                 for (var variant in YaruVariant.values)
                   YaruColorDisk(
                     onPressed: () {
-                      ref.read(settingsProvider.notifier).setColorVariant(variant.color);
+                      ref
+                          .read(settingsProvider.notifier)
+                          .setColorVariant(variant.color);
                     },
                     color: variant.color,
                     selected: settings.colorSeed == variant.color,
@@ -135,88 +139,98 @@ class _TextEditorSettings extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.all(8.0),
       child: YaruSection(headline: "Text Editor", children: [
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.edit),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.edit),
+          trailing: const Text(
             "Theme",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: DropdownButton<String?>(
+          title: DropdownButton<String?>(
               value: settings.textEditorTheme,
               items: _getTextEditorThemeDropdownMenuItems(),
               onChanged: (value) {
-                ref.read(settingsProvider.notifier).setTextEditorTheme(value ?? "vs");
+                ref
+                    .read(settingsProvider.notifier)
+                    .setTextEditorTheme(value ?? "vs");
               }),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.format_size),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.format_size),
+          trailing: const Text(
             "Font Size",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: SizedBox(
+          title: SizedBox(
               width: MediaQuery.of(context).size.width / 20,
               height: MediaQuery.of(context).size.height / 20,
               child: TextField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: TextEditingController(text: settings.textEditorFontSize.toString()),
+                controller: TextEditingController(
+                    text: settings.textEditorFontSize.toString()),
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.all(5),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (value) {
                   double? parsedValue = double.tryParse(value);
                   if (parsedValue != null) {
-                    ref.read(settingsProvider.notifier).setTextEditorFontSize(parsedValue);
+                    ref
+                        .read(settingsProvider.notifier)
+                        .setTextEditorFontSize(parsedValue);
                   }
                 },
               )),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.house),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.house),
+          trailing: const Text(
             "Font Family",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: DropdownButton<String?>(
+          title: DropdownButton<String?>(
               value: settings.textEditorFontFamily,
               items: _getTextEditorFontFamilyDropdownMenuItems(),
               onChanged: (value) {
-                ref.read(settingsProvider.notifier).setTextEditorFontFamily(value ?? "Hack");
+                ref
+                    .read(settingsProvider.notifier)
+                    .setTextEditorFontFamily(value ?? "Hack");
               }),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.wrap_text),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.wrap_text),
+          trailing: const Text(
             "Wrap Text",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: Switch(
+          title: Switch(
             onChanged: (bool value) {
               ref.read(settingsProvider.notifier).setTextEditorWrap(value);
             },
             value: settings.textEditorWrap,
           ),
         ),
-        YaruRow(
+        YaruTile(
           enabled: true,
           padding: const EdgeInsets.all(8.0),
-          leadingWidget: const Icon(Icons.format_list_numbered),
-          trailingWidget: const Text(
+          leading: const Icon(Icons.format_list_numbered),
+          trailing: const Text(
             "Display line numbers",
             style: TextStyle(fontSize: 18),
           ),
-          actionWidget: Switch(
+          title: Switch(
             onChanged: (bool value) {
-              ref.read(settingsProvider.notifier).setTextEditorDisplayLineNumbers(value);
+              ref
+                  .read(settingsProvider.notifier)
+                  .setTextEditorDisplayLineNumbers(value);
             },
             value: settings.textEditorDisplayLineNumbers,
           ),
@@ -235,7 +249,7 @@ class _About extends ConsumerWidget {
 
     return Container(
       margin: const EdgeInsets.all(8.0),
-      child: YaruSection(headline: "About", children: [
+      child: YaruSection(headline: const Text("About"), child:
         MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
@@ -244,21 +258,23 @@ class _About extends ConsumerWidget {
                 context: context,
                 useRootNavigator: false,
                 applicationName: 'Dev Lab',
-                applicationIcon: const SizedBox(width: 80, child: Image(image: AssetImage('assets/icon.png'))),
+                applicationIcon: const SizedBox(
+                    width: 80,
+                    child: Image(image: AssetImage('assets/icon.png'))),
                 children: [
                   const Text(
                       "Parts of this app is inspired and based on the code of DevWidgets (https://github.com/gumbarros/DevWidgets)"),
                 ]),
-            child: const YaruRow(
+            child: const YaruTile(
               enabled: true,
-              trailingWidget: Text(
+              trailing: Text(
                 "Licenses",
                 style: TextStyle(fontSize: 18),
               ),
               description: "Access to all third-party licenses",
               padding: EdgeInsets.all(8.0),
-              actionWidget: SizedBox.shrink(),
-              leadingWidget: Icon(Icons.document_scanner),
+              title: SizedBox.shrink(),
+              leading: Icon(Icons.document_scanner),
             ),
           ),
         ),
@@ -268,16 +284,16 @@ class _About extends ConsumerWidget {
             onTap: () async {
               await launchUrl(Uri.parse("http://www.janabisoft.net"));
             },
-            child: YaruRow(
+            child: YaruTile(
               enabled: true,
-              trailingWidget: const Text(
+              trailing: const Text(
                 "www.janabisoft.net",
                 style: TextStyle(fontSize: 18),
               ),
               description: websiteAbout,
               padding: const EdgeInsets.all(8.0),
-              actionWidget: const SizedBox.shrink(),
-              leadingWidget: const Icon(Icons.public),
+              title: const SizedBox.shrink(),
+              leading: const Icon(Icons.public),
             ),
           ),
         ),
@@ -287,16 +303,16 @@ class _About extends ConsumerWidget {
             onTap: () async {
               await launchUrl(Uri.parse("mailto:support@janabisoft.net"));
             },
-            child: YaruRow(
+            child: YaruTile(
               enabled: true,
-              trailingWidget: const Text(
+              trailing: const Text(
                 "Support & Feedback",
                 style: TextStyle(fontSize: 18),
               ),
               description: supportAbout,
               padding: const EdgeInsets.all(8.0),
-              actionWidget: const SizedBox.shrink(),
-              leadingWidget: const Icon(Icons.mail),
+              title: const SizedBox.shrink(),
+              leading: const Icon(Icons.mail),
             ),
           ),
         ),
@@ -304,18 +320,19 @@ class _About extends ConsumerWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () async {
-              await launchUrl(Uri.parse("https://janabisoft.net/p")); //Todo: add privacy statement link
+              await launchUrl(Uri.parse(
+                  "https://janabisoft.net/p")); //Todo: add privacy statement link
             },
-            child: YaruRow(
+            child: YaruTile(
               enabled: true,
-              trailingWidget: const Text(
+              trailing: const Text(
                 "Privacy Statement",
                 style: TextStyle(fontSize: 18),
               ),
               description: privacyAbout,
               padding: const EdgeInsets.all(8.0),
-              actionWidget: const SizedBox.shrink(),
-              leadingWidget: const Icon(Icons.privacy_tip_outlined),
+              title: const SizedBox.shrink(),
+              leading: const Icon(Icons.privacy_tip_outlined),
             ),
           ),
         ),
@@ -326,22 +343,22 @@ class _About extends ConsumerWidget {
         //     onTap: () async {
         //       await launchUrl(Uri.parse("https://www.github.com/gumbarros/DevWidgets"));
         //     },
-        //     child: const YaruRow(
+        //     child: const YaruTile(
         //       enabled: true,
-        //       trailingWidget: Text(
+        //       trailing: Text(
         //         "Repository",
         //         style: TextStyle(fontSize: 18),
         //       ),
         //       description: "repository_about",
         //       padding: EdgeInsets.all(8.0),
-        //       actionWidget: SizedBox.shrink(),
-        //       leadingWidget: Icon(Icons.code),
+        //       title: SizedBox.shrink(),
+        //       leading: Icon(Icons.code),
         //     ),
         //   ),
         // ),
-        YaruRow(
+        YaruTile(
           enabled: true,
-          trailingWidget: const Text(
+          trailing: const Text(
             "Build info",
             style: TextStyle(fontSize: 18),
           ),
@@ -351,8 +368,8 @@ class _About extends ConsumerWidget {
             error: (error, _) => error.toString(),
           ),
           padding: const EdgeInsets.all(8.0),
-          actionWidget: const SizedBox.shrink(),
-          leadingWidget: const Icon(Icons.computer),
+          title: const SizedBox.shrink(),
+          leading: const Icon(Icons.computer),
         ),
       ]),
     );

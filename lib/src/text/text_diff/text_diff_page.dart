@@ -10,7 +10,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:pretty_diff_text/pretty_diff_text.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class TextDiffPage extends HookConsumerWidget {
@@ -26,7 +26,8 @@ class TextDiffPage extends HookConsumerWidget {
     useEffect(() {
       Future(() {
         oldTextController.addListener(() {
-          ref.read(oldTextProvider.notifier).state = applyWebSpaceFix(oldTextController.text);
+          ref.read(oldTextProvider.notifier).state =
+              applyWebSpaceFix(oldTextController.text);
         });
       });
 
@@ -36,7 +37,8 @@ class TextDiffPage extends HookConsumerWidget {
     useEffect(() {
       Future(() {
         newTextController.addListener(() {
-          ref.read(newTextProvider.notifier).state = applyWebSpaceFix(newTextController.text);
+          ref.read(newTextProvider.notifier).state =
+              applyWebSpaceFix(newTextController.text);
         });
       });
 
@@ -49,14 +51,15 @@ class TextDiffPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
+            child: YaruSection(headline: const Text("configuration"), child:
               RadioListTile<DiffCleanupType>(
                   title: Text("semantic_cleanup"),
                   subtitle: Text("semantic cleanup description"),
                   value: DiffCleanupType.SEMANTIC,
                   groupValue: ref.watch(diffCleanupTypeProvider),
                   onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state = value ?? DiffCleanupType.EFFICIENCY;
+                    ref.read(diffCleanupTypeProvider.notifier).state =
+                        value ?? DiffCleanupType.EFFICIENCY;
                   }),
               RadioListTile(
                   title: Row(
@@ -67,9 +70,12 @@ class TextDiffPage extends HookConsumerWidget {
                           height: 30,
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             onChanged: (value) {
-                              ref.read(editCostProvider.notifier).state = int.tryParse(value) ?? 4;
+                              ref.read(editCostProvider.notifier).state =
+                                  int.tryParse(value) ?? 4;
                             },
                             decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(5),
@@ -82,7 +88,8 @@ class TextDiffPage extends HookConsumerWidget {
                   value: DiffCleanupType.EFFICIENCY,
                   groupValue: ref.watch(diffCleanupTypeProvider),
                   onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state = value ?? DiffCleanupType.EFFICIENCY;
+                    ref.read(diffCleanupTypeProvider.notifier).state =
+                        value ?? DiffCleanupType.EFFICIENCY;
                   }),
               RadioListTile(
                   title: Text("no_cleanup"),
@@ -90,7 +97,8 @@ class TextDiffPage extends HookConsumerWidget {
                   value: DiffCleanupType.NONE,
                   groupValue: ref.watch(diffCleanupTypeProvider),
                   onChanged: (DiffCleanupType? value) {
-                    ref.read(diffCleanupTypeProvider.notifier).state = value ?? DiffCleanupType.EFFICIENCY;
+                    ref.read(diffCleanupTypeProvider.notifier).state =
+                        value ?? DiffCleanupType.EFFICIENCY;
                   }),
             ]),
           ),
@@ -99,10 +107,15 @@ class TextDiffPage extends HookConsumerWidget {
               child: MultiSplitViewTheme(
                 data: MultiSplitViewThemeData(dividerThickness: 5),
                 child: MultiSplitView(
-                  dividerBuilder: (axis, index, resizable, dragging, highlighted, themeData) =>
-                      MultiSplitViewDivider(dragging: dragging, highlighted: highlighted),
+                  dividerBuilder: (axis, index, resizable, dragging,
+                          highlighted, themeData) =>
+                      MultiSplitViewDivider(
+                          dragging: dragging, highlighted: highlighted),
                   axis: Axis.horizontal,
-                  initialAreas: [Area(weight: 0.5, minimalWeight: 0.3), Area(weight: 0.5, minimalWeight: 0.3)],
+                  initialAreas: [
+                    Area(weight: 0.5, minimalWeight: 0.3),
+                    Area(weight: 0.5, minimalWeight: 0.3)
+                  ],
                   children: [
                     InputEditor(
                         toolbarTitle: "old_text",
@@ -126,7 +139,8 @@ class TextDiffPage extends HookConsumerWidget {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: YaruDialogTitle(closeIconData: Icons.close, title: "difference"),
+                    title: YaruDialogTitle(
+                        closeIconData: Icons.close, title: "difference"),
                     content: _Diff(settings: settings, isDialog: true),
                   );
                 },
@@ -162,7 +176,9 @@ class _Diff extends ConsumerWidget {
             alignment: Alignment.topLeft,
             child: Container(
               margin: const EdgeInsets.all(8.0),
-              child: Text("difference", style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start),
+              child: Text("difference",
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.start),
             ),
           ),
         ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class LipsumGeneratorPage extends HookConsumerWidget {
   const LipsumGeneratorPage({Key? key}) : super(key: key);
@@ -26,53 +26,59 @@ class LipsumGeneratorPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.width_normal),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.width_normal),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                       title: Text("Generator mode"),
-                      subtitle: Text("Generate words, sentences or paragraphs with lorem ipsum text")),
+                      subtitle: Text(
+                          "Generate words, sentences or paragraphs with lorem ipsum text")),
                 ),
-                actionWidget: DropdownButton<LipsumType>(
+                title: DropdownButton<LipsumType>(
                     value: ref.watch(lipsumTypeProvider),
                     items: getDropdownMenuItems<LipsumType>(LipsumType.values),
-                    onChanged: (selected) => ref.read(lipsumTypeProvider.notifier).state = selected!),
+                    onChanged: (selected) => ref
+                        .read(lipsumTypeProvider.notifier)
+                        .state = selected!),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.fork_right),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.fork_right),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                     title: Text("lipsum start with"),
                   ),
                 ),
-                actionWidget: Switch(
-                  onChanged: (value) => ref.read(startWithLoremProvider.notifier).state = value,
+                title: Switch(
+                  onChanged: (value) =>
+                      ref.read(startWithLoremProvider.notifier).state = value,
                   value: ref.watch(startWithLoremProvider),
                 ),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.tag),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.tag),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ListTile(
                     title: Text("Amount"),
-                    subtitle: Text("Amount of words, sentences or paragraphs to be generated"),
+                    subtitle: Text(
+                        "Amount of words, sentences or paragraphs to be generated"),
                   ),
                 ),
-                actionWidget: Flexible(
+                title: Flexible(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     textAlign: TextAlign.end,
                     initialValue: ref.watch(amountProvider).toString(),
                     onChanged: (value) {
-                      ref.read(amountProvider.notifier).state = int.tryParse(value) ?? 0;
+                      ref.read(amountProvider.notifier).state =
+                          int.tryParse(value) ?? 0;
                     },
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(10),

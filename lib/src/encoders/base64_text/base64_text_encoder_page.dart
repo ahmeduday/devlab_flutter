@@ -6,7 +6,7 @@ import 'package:devlab_flutter/src/widgets/io_editor/io_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class Base64TextEncoderPage extends HookConsumerWidget {
   const Base64TextEncoderPage({Key? key}) : super(key: key);
@@ -39,31 +39,39 @@ class Base64TextEncoderPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "Configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("Configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.compare_arrows_sharp),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.compare_arrows_sharp),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("Conversion"), subtitle: Text("Select which conversion mode you want to use")),
+                  child: ListTile(
+                      title: Text("Conversion"),
+                      subtitle:
+                          Text("Select which conversion mode you want to use")),
                 ),
-                actionWidget: DropdownButton<ConversionMode>(
+                title: DropdownButton<ConversionMode>(
                     value: ref.watch(conversionModeProvider),
-                    items: getDropdownMenuItems<ConversionMode>(ConversionMode.values),
+                    items: getDropdownMenuItems<ConversionMode>(
+                        ConversionMode.values),
                     onChanged: (selected) {
-                      ref.read(conversionModeProvider.notifier).state = selected!;
+                      ref.read(conversionModeProvider.notifier).state =
+                          selected!;
                     }),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.grid_3x3),
-                trailingWidget: const Padding(
+                leading: const Icon(Icons.grid_3x3),
+                trailing: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("Encoding"), subtitle: Text("Select which encoding you want to use")),
+                  child: ListTile(
+                      title: Text("Encoding"),
+                      subtitle: Text("Select which encoding you want to use")),
                 ),
-                actionWidget: DropdownButton<Base64EncodingType>(
+                title: DropdownButton<Base64EncodingType>(
                     value: ref.watch(encodingTypeProvider),
-                    items: getDropdownMenuItems<Base64EncodingType>(Base64EncodingType.values),
+                    items: getDropdownMenuItems<Base64EncodingType>(
+                        Base64EncodingType.values),
                     onChanged: (selected) {
                       ref.read(encodingTypeProvider.notifier).state = selected!;
                     }),

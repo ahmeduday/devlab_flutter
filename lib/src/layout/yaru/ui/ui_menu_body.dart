@@ -7,7 +7,7 @@ import 'package:devlab_flutter/tool.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class UiMenuBody extends ConsumerWidget {
   const UiMenuBody({Key? key}) : super(key: key);
@@ -43,7 +43,8 @@ class UiMenuBody extends ConsumerWidget {
                   hoverColor: Colors.transparent,
                   tileColor: Colors.transparent,
                   selectedTileColor: Colors.transparent,
-                  selected: ref.watch(selectedGroupProvider)?.name == group.name,
+                  selected:
+                      ref.watch(selectedGroupProvider)?.name == group.name,
                 ),
               );
             },
@@ -51,10 +52,13 @@ class UiMenuBody extends ConsumerWidget {
             body: Column(
               children: ListTile.divideTiles(
                   context: context,
-                  tiles: allTools.where((t) => t.group.name == group.name).map<ListTile>((Tool tool) {
+                  tiles: allTools
+                      .where((t) => t.group.name == group.name)
+                      .map<ListTile>((Tool tool) {
                     return ListTile(
                       title: Text(tool.shortTitle),
-                      selected: ref.watch(selectedToolProvider).name == tool.name,
+                      selected:
+                          ref.watch(selectedToolProvider).name == tool.name,
                       leading: Icon(tool.icon),
                       onTap: () {
                         ref.read(selectedToolProvider.notifier).state = tool;

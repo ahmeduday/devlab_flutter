@@ -10,7 +10,7 @@ import 'package:highlight/languages/json.dart';
 import 'package:highlight/languages/yaml.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:json2yaml/json2yaml.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class JsonYamlConverterPage extends HookConsumerWidget {
   const JsonYamlConverterPage({Key? key}) : super(key: key);
@@ -24,7 +24,8 @@ class JsonYamlConverterPage extends HookConsumerWidget {
 
     useEffect(() {
       Future(() {
-        inputController.language = conversionType == JsonYamlConversionType.jsonToYaml ? json : yaml;
+        inputController.language =
+            conversionType == JsonYamlConversionType.jsonToYaml ? json : yaml;
         inputController.addListener(() {
           ref.read(inputTextProvider.notifier).state = inputController.text;
         });
@@ -35,7 +36,8 @@ class JsonYamlConverterPage extends HookConsumerWidget {
 
     useEffect(() {
       Future(() {
-        outputController.language = conversionType == JsonYamlConversionType.jsonToYaml ? yaml : json;
+        outputController.language =
+            conversionType == JsonYamlConversionType.jsonToYaml ? yaml : json;
         return outputController.text = ref.watch(outputTextProvider);
       });
       return;
@@ -46,84 +48,104 @@ class JsonYamlConverterPage extends HookConsumerWidget {
       child: ListView(children: [
         Container(
           margin: const EdgeInsets.all(8.0),
-          child: YaruSection(headline: "configuration", children: [
-            YaruRow(
+          child: YaruSection(headline: const Text("configuration"), child: Row(children: [
+          
+            YaruTile(
               enabled: true,
-              leadingWidget: const Icon(
+              leading: const Icon(
                 Icons.compare_arrows_sharp,
                 size: 25,
               ),
-              trailingWidget: const Padding(
+              trailing: const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
                   "conversion_type",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              actionWidget: DropdownButton<JsonYamlConversionType>(
+              title: DropdownButton<JsonYamlConversionType>(
                   value: ref.watch(conversionTypeProvider),
-                  items: getDropdownMenuItems<JsonYamlConversionType>(JsonYamlConversionType.values),
-                  onChanged: (selected) => ref.watch(conversionTypeProvider.notifier).state = selected!),
+                  items: getDropdownMenuItems<JsonYamlConversionType>(
+                      JsonYamlConversionType.values),
+                  onChanged: (selected) => ref
+                      .watch(conversionTypeProvider.notifier)
+                      .state = selected!),
             ),
             Visibility(
-                visible: ref.watch(conversionTypeProvider) == JsonYamlConversionType.yamlToJson,
+                visible: ref.watch(conversionTypeProvider) ==
+                    JsonYamlConversionType.yamlToJson,
                 child: Column(children: [
-                  YaruRow(
+                  YaruTile(
                     enabled: true,
-                    leadingWidget: const Icon(Icons.arrow_right_alt),
-                    trailingWidget: const Padding(
+                    leading: const Icon(Icons.arrow_right_alt),
+                    trailing: const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
                         "indentation",
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    actionWidget: DropdownButton<Indentation>(
+                    title: DropdownButton<Indentation>(
                         value: ref.watch(indentationProvider),
-                        items: getDropdownMenuItems<Indentation>(Indentation.values),
-                        onChanged: (selected) => ref.read(indentationProvider.notifier).state = selected!),
+                        items: getDropdownMenuItems<Indentation>(
+                            Indentation.values),
+                        onChanged: (selected) => ref
+                            .read(indentationProvider.notifier)
+                            .state = selected!),
                   ),
                 ])),
             Visibility(
-                visible: ref.watch(conversionTypeProvider) == JsonYamlConversionType.jsonToYaml,
+                visible: ref.watch(conversionTypeProvider) ==
+                    JsonYamlConversionType.jsonToYaml,
                 child: Column(children: [
-                  YaruRow(
+                  YaruTile(
                     enabled: true,
-                    leadingWidget: const Icon(Icons.arrow_right_alt),
-                    trailingWidget: const Padding(
+                    leading: const Icon(Icons.arrow_right_alt),
+                    trailing: const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
                         "yaml_style",
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    actionWidget: DropdownButton<YamlStyle>(
+                    title: DropdownButton<YamlStyle>(
                         value: ref.watch(yamlStyleProvider),
                         items: getYamlStyleDropdownMenuItems(),
-                        onChanged: (selected) => ref.read(yamlStyleProvider.notifier).state = selected!),
+                        onChanged: (selected) => ref
+                            .read(yamlStyleProvider.notifier)
+                            .state = selected!),
                   ),
                 ])),
-            YaruRow(
+            YaruTile(
               enabled: true,
-              leadingWidget: const Icon(Icons.sort_by_alpha),
-              trailingWidget: const Padding(
+              leading: const Icon(Icons.sort_by_alpha),
+              trailing: const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
                   "sort_properties_alphabetically",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              actionWidget: Switch(
+              title: Switch(
                 value: ref.watch(sortAlphabeticallyProvider),
-                onChanged: (value) => ref.read(sortAlphabeticallyProvider.notifier).state = value,
+                onChanged: (value) =>
+                    ref.read(sortAlphabeticallyProvider.notifier).state = value,
               ),
             )
-          ]),
+          ],
+          ),
+
         ),
-        SizedBox(
+                SizedBox(
             height: MediaQuery.of(context).size.height / 1.2,
-            child: IOEditor(inputController: inputController, outputController: outputController))
-      ]),
+            child: IOEditor(
+                inputController: inputController,
+                outputController: outputController
+                ),
+                ),
+
+      ],
+      ),
     );
   }
 }

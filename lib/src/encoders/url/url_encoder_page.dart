@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class UrlEncoderPage extends HookConsumerWidget {
   const UrlEncoderPage({Key? key}) : super(key: key);
@@ -43,19 +43,23 @@ class UrlEncoderPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.compare_arrows_sharp),
-                trailingWidget: Padding(
+                leading: const Icon(Icons.compare_arrows_sharp),
+                trailing: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: ListTile(title: Text("conversion"), subtitle: Text("conversion_mode")),
+                  child: ListTile(
+                      title: Text("conversion"),
+                      subtitle: Text("conversion_mode")),
                 ),
-                actionWidget: DropdownButton<ConversionMode>(
+                title: DropdownButton<ConversionMode>(
                     value: ref.watch(conversionModeProvider),
-                    items: getDropdownMenuItems<ConversionMode>(ConversionMode.values),
+                    items: getDropdownMenuItems<ConversionMode>(
+                        ConversionMode.values),
                     onChanged: (selected) {
-                      ref.read(conversionModeProvider.notifier).state = selected!;
+                      ref.read(conversionModeProvider.notifier).state =
+                          selected!;
                     }),
               ),
             ]),

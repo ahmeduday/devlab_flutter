@@ -8,7 +8,7 @@ import 'package:devlab_flutter/src/widgets/io_editor/code_editor_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:highlight/languages/json.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 const exampleJson = """[
   {
@@ -58,8 +58,9 @@ class _Fields extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return YaruSection(headline: "fields", children: [
-      SizedBox(
+    return YaruSection(
+      headline: const Text("fields"),
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 2,
         child: ListView.separated(
             itemBuilder: (BuildContext context, int index) {
@@ -71,20 +72,27 @@ class _Fields extends ConsumerWidget {
                     child: TextFormField(
                       initialValue: fields[index].fieldName,
                       onChanged: (value) {
-                        ref.read(fieldListProvider.notifier).setFieldName(fieldId: fields[index].fieldId, name: value);
+                        ref.read(fieldListProvider.notifier).setFieldName(
+                            fieldId: fields[index].fieldId, name: value);
                       },
-                      decoration: const InputDecoration(border: UnderlineInputBorder(), labelText: "field_name"),
+                      decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "field_name"),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     width: MediaQuery.of(context).size.width / 8,
                     child: DropdownButtonFormField<DataType>(
-                        decoration: const InputDecoration(labelText: 'data_type', border: UnderlineInputBorder()),
+                        decoration: const InputDecoration(
+                            labelText: 'data_type',
+                            border: UnderlineInputBorder()),
                         value: fields[index].dataType,
                         items: getDropdownMenuItems<DataType>(DataType.values),
                         onChanged: (selected) {
-                          ref.read(fieldListProvider.notifier).setDataType(fieldId: fields[index].fieldId, dataType: selected!);
+                          ref.read(fieldListProvider.notifier).setDataType(
+                              fieldId: fields[index].fieldId,
+                              dataType: selected!);
                         }),
                   ),
                   Visibility(
@@ -98,11 +106,14 @@ class _Fields extends ConsumerWidget {
                       child: TextFormField(
                         initialValue: fields[index].length?.toString(),
                         onChanged: (value) {
-                          ref
-                              .read(fieldListProvider.notifier)
-                              .setFieldLength(fieldId: fields[index].fieldId, length: int.tryParse(value));
+                          ref.read(fieldListProvider.notifier).setFieldLength(
+                              fieldId: fields[index].fieldId,
+                              length: int.tryParse(value));
                         },
-                        decoration: const InputDecoration(border: UnderlineInputBorder(), hintText: "MAX", labelText: "Length"),
+                        decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            hintText: "MAX",
+                            labelText: "Length"),
                       ),
                     ),
                   ),
@@ -112,7 +123,8 @@ class _Fields extends ConsumerWidget {
                     child: CheckboxListTile(
                         value: fields[index].enabled,
                         onChanged: (value) {
-                          ref.read(fieldListProvider.notifier).setFieldEnabled(fieldId: fields[index].fieldId, enabled: value);
+                          ref.read(fieldListProvider.notifier).setFieldEnabled(
+                              fieldId: fields[index].fieldId, enabled: value);
                         },
                         title: const Text("Enabled")),
                   ),
@@ -122,7 +134,8 @@ class _Fields extends ConsumerWidget {
                     child: CheckboxListTile(
                         value: fields[index].required,
                         onChanged: (value) {
-                          ref.read(fieldListProvider.notifier).setFieldRequired(fieldId: fields[index].fieldId, required: value);
+                          ref.read(fieldListProvider.notifier).setFieldRequired(
+                              fieldId: fields[index].fieldId, required: value);
                         },
                         title: const Text("Required")),
                   ),
@@ -134,17 +147,20 @@ class _Fields extends ConsumerWidget {
                         onChanged: (value) {
                           ref
                               .read(fieldListProvider.notifier)
-                              .setFieldPrimaryKey(fieldId: fields[index].fieldId, primaryKey: value);
+                              .setFieldPrimaryKey(
+                                  fieldId: fields[index].fieldId,
+                                  primaryKey: value);
                         },
                         title: const Text("Primary Key")),
                   ),
                 ],
               );
             },
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
             itemCount: fields.length),
       ),
-    ]);
+    );
   }
 }
 
@@ -155,96 +171,90 @@ class _Configuration extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return YaruSection(headline: "Configuration", children: [
-      YaruRow(
-          trailingWidget: Container(
-            padding: const EdgeInsets.all(8.0),
-            width: MediaQuery.of(context).size.width / 5,
-            child: ListTile(
-              title: TextFormField(
-                initialValue: ref.watch(tableNameProvider),
-                onChanged: (value) {
-                  ref.read(tableNameProvider.notifier).state = value;
-                },
-                decoration: const InputDecoration(border: UnderlineInputBorder(), labelText: "Table Name"),
+    return YaruSection(
+      headline: const Text("Configuration"),
+      child: Row(children: [
+        YaruTile(
+            trailing: Container(
+              padding: const EdgeInsets.all(8.0),
+              width: MediaQuery.of(context).size.width / 5,
+              child: ListTile(
+                title: TextFormField(
+                  initialValue: ref.watch(tableNameProvider),
+                  onChanged: (value) {
+                    ref.read(tableNameProvider.notifier).state = value;
+                  },
+                  decoration: const InputDecoration(
+                      border: UnderlineInputBorder(), labelText: "Table Name"),
+                ),
               ),
             ),
-          ),
-          enabled: true,
-          actionWidget: const SizedBox.shrink()),
-      YaruRow(
-          trailingWidget: Row(children: [
-            Container(
-                padding: const EdgeInsets.all(8.0),
-                width: MediaQuery.of(context).size.width / 5,
-                child: CheckboxListTile(
-                  onChanged: (value) {
-                    ref.read(enableCreateTableProvider.notifier).state = value!;
-                  },
-                  title: const Text("CREATE TABLE"),
-                  value: ref.watch(enableCreateTableProvider),
-                )),
-            Visibility(
-              visible: ref.watch(enableCreateTableProvider),
-              child: Container(
+            enabled: true,
+            title: const SizedBox.shrink()),
+        YaruTile(
+            trailing: Row(children: [
+              Container(
                   padding: const EdgeInsets.all(8.0),
                   width: MediaQuery.of(context).size.width / 5,
                   child: CheckboxListTile(
                     onChanged: (value) {
-                      ref.read(enableCreateTableIfNotExistsProvider.notifier).state = value!;
+                      ref.read(enableCreateTableProvider.notifier).state =
+                          value!;
                     },
-                    title: const Text("IF NOT EXISTS"),
-                    value: ref.watch(enableCreateTableIfNotExistsProvider),
+                    title: const Text("CREATE TABLE"),
+                    value: ref.watch(enableCreateTableProvider),
                   )),
-            ),
-          ]),
-          enabled: true,
-          actionWidget: const SizedBox.shrink()),
-      YaruRow(
-          trailingWidget: Row(children: [
-            Container(
-                padding: const EdgeInsets.all(8.0),
-                width: MediaQuery.of(context).size.width / 5,
-                child: CheckboxListTile(
-                  onChanged: (value) {
-                    ref.read(enableDropTableProvider.notifier).state = value!;
-                  },
-                  title: const Text("DROP TABLE"),
-                  value: ref.watch(enableDropTableProvider),
-                )),
-            Visibility(
-              visible: ref.watch(enableDropTableProvider),
-              child: Container(
+              Visibility(
+                visible: ref.watch(enableCreateTableProvider),
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width / 5,
+                    child: CheckboxListTile(
+                      onChanged: (value) {
+                        ref
+                            .read(enableCreateTableIfNotExistsProvider.notifier)
+                            .state = value!;
+                      },
+                      title: const Text("IF NOT EXISTS"),
+                      value: ref.watch(enableCreateTableIfNotExistsProvider),
+                    )),
+              ),
+            ]),
+            enabled: true,
+            title: const SizedBox.shrink()),
+        YaruTile(
+            trailing: Row(children: [
+              Container(
                   padding: const EdgeInsets.all(8.0),
                   width: MediaQuery.of(context).size.width / 5,
                   child: CheckboxListTile(
                     onChanged: (value) {
-                      ref.read(enableDropTableIfExistsProvider.notifier).state = value!;
+                      ref.read(enableDropTableProvider.notifier).state = value!;
                     },
-                    title: const Text("IF EXISTS"),
-                    value: ref.watch(enableDropTableIfExistsProvider),
+                    title: const Text("DROP TABLE"),
+                    value: ref.watch(enableDropTableProvider),
                   )),
-            ),
-          ]),
-          enabled: true,
-          actionWidget: const SizedBox.shrink()),
-      YaruRow(
-          trailingWidget: Row(children: [
-            Container(
-                padding: const EdgeInsets.all(8.0),
-                width: MediaQuery.of(context).size.width / 5,
-                child: RadioListTile<ScriptType>(
-                  groupValue: ref.watch(scriptTypeProvider),
-                  onChanged: (value) {
-                    ref.read(scriptTypeProvider.notifier).state = value!;
-                  },
-                  title: const Text("INSERT"),
-                  value: ScriptType.insert,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                )),
-            Visibility(
-              visible: ref.watch(fieldListProvider).where((f) => f.primaryKey).isNotEmpty,
-              child: Container(
+              Visibility(
+                visible: ref.watch(enableDropTableProvider),
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width / 5,
+                    child: CheckboxListTile(
+                      onChanged: (value) {
+                        ref
+                            .read(enableDropTableIfExistsProvider.notifier)
+                            .state = value!;
+                      },
+                      title: const Text("IF EXISTS"),
+                      value: ref.watch(enableDropTableIfExistsProvider),
+                    )),
+              ),
+            ]),
+            enabled: true,
+            title: const SizedBox.shrink()),
+        YaruTile(
+            trailing: Row(children: [
+              Container(
                   padding: const EdgeInsets.all(8.0),
                   width: MediaQuery.of(context).size.width / 5,
                   child: RadioListTile<ScriptType>(
@@ -252,56 +262,81 @@ class _Configuration extends ConsumerWidget {
                     onChanged: (value) {
                       ref.read(scriptTypeProvider.notifier).state = value!;
                     },
-                    title: const Text("UPDATE"),
-                    value: ScriptType.update,
+                    title: const Text("INSERT"),
+                    value: ScriptType.insert,
                     controlAffinity: ListTileControlAffinity.trailing,
                   )),
-            ),
-            Visibility(
-              visible: ref.watch(fieldListProvider).where((f) => f.primaryKey).isNotEmpty,
-              child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  width: MediaQuery.of(context).size.width / 5,
-                  child: RadioListTile<ScriptType>(
-                    value: ScriptType.delete,
-                    onChanged: (value) {
-                      ref.read(scriptTypeProvider.notifier).state = value!;
-                    },
-                    title: const Text("DELETE"),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    groupValue: ref.watch(scriptTypeProvider),
-                  )),
-            ),
-          ]),
-          enabled: true,
-          actionWidget: const SizedBox.shrink()),
-    ]);
+              Visibility(
+                visible: ref
+                    .watch(fieldListProvider)
+                    .where((f) => f.primaryKey)
+                    .isNotEmpty,
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width / 5,
+                    child: RadioListTile<ScriptType>(
+                      groupValue: ref.watch(scriptTypeProvider),
+                      onChanged: (value) {
+                        ref.read(scriptTypeProvider.notifier).state = value!;
+                      },
+                      title: const Text("UPDATE"),
+                      value: ScriptType.update,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                    )),
+              ),
+              Visibility(
+                visible: ref
+                    .watch(fieldListProvider)
+                    .where((f) => f.primaryKey)
+                    .isNotEmpty,
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width / 5,
+                    child: RadioListTile<ScriptType>(
+                      value: ScriptType.delete,
+                      onChanged: (value) {
+                        ref.read(scriptTypeProvider.notifier).state = value!;
+                      },
+                      title: const Text("DELETE"),
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      groupValue: ref.watch(scriptTypeProvider),
+                    )),
+              ),
+            ]),
+            enabled: true,
+            title: const SizedBox.shrink()),
+      ]),
+    );
   }
 }
 
 Widget _buildInvalidJsonData(BuildContext context) {
   return Center(
-      child: YaruSection(
-    children: [
-      SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2,
-        child: CodeEditorWrapper(
-          usesCodeControllers: true,
-          textEditingController: CodeController(language: json, text: exampleJson),
-          readOnly: true,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-            child: Text(
-          """|-
+    child: YaruSection(
+      child: Row(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2,
+            child: CodeEditorWrapper(
+              usesCodeControllers: true,
+              textEditingController:
+                  CodeController(language: json, text: exampleJson),
+              readOnly: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: Text(
+              """|-
   Invalid JSON data.
   Please input a array with objects like the example above.""",
-          style: Theme.of(context).textTheme.bodyLarge,
-        )),
-      )
-    ],
-  ));
+              style: Theme.of(context).textTheme.bodyLarge,
+            )),
+          )
+        ],
+      ),
+    ),
+  );
 }

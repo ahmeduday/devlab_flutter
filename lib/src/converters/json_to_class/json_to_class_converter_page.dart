@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:highlight/languages/dart.dart';
 import 'package:highlight/languages/json.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class JsonToClassConverterPage extends HookConsumerWidget {
   const JsonToClassConverterPage({Key? key}) : super(key: key);
@@ -41,61 +41,67 @@ class JsonToClassConverterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
-              YaruRow(
-                enabled: true,
-                leadingWidget: const Icon(
-                  Icons.title,
-                  size: 25,
-                ),
-                trailingWidget: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "class_name",
-                    style: TextStyle(fontSize: 18),
+            child: YaruSection(
+              headline: const Text("configuration"),
+              child: Row(children: [
+                YaruTile(
+                  enabled: true,
+                  leading: const Icon(
+                    Icons.title,
+                    size: 25,
                   ),
-                ),
-                actionWidget: SizedBox(
-                  width: MediaQuery.of(context).size.width / 10,
-                  child: TextFormField(
-                    textAlign: TextAlign.end,
-                    initialValue: ref.read(classNameProvider),
-                    onChanged: (value) {
-                      ref.read(classNameProvider.notifier).state = value;
-                    },
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(),
+                  trailing: const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "class_name",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  title: SizedBox(
+                    width: MediaQuery.of(context).size.width / 10,
+                    child: TextFormField(
+                      textAlign: TextAlign.end,
+                      initialValue: ref.read(classNameProvider),
+                      onChanged: (value) {
+                        ref.read(classNameProvider.notifier).state = value;
+                      },
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.all(10),
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              YaruRow(
-                enabled: true,
-                leadingWidget: const Icon(
-                  Icons.code,
-                  size: 25,
-                ),
-                trailingWidget: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "programming_language",
-                    style: TextStyle(fontSize: 18),
+                YaruTile(
+                  enabled: true,
+                  leading: const Icon(
+                    Icons.code,
+                    size: 25,
                   ),
+                  trailing: const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "programming_language",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  title: DropdownButton<ProgrammingLanguage>(
+                      value: ref.watch(programmingLanguageProvider),
+                      items: getDropdownMenuItems<ProgrammingLanguage>(
+                          ProgrammingLanguage.values),
+                      onChanged: (selected) => ref
+                          .read(programmingLanguageProvider.notifier)
+                          .state = selected!),
                 ),
-                actionWidget: DropdownButton<ProgrammingLanguage>(
-                    value: ref.watch(programmingLanguageProvider),
-                    items: getDropdownMenuItems<ProgrammingLanguage>(ProgrammingLanguage.values),
-                    onChanged: (selected) => ref.read(programmingLanguageProvider.notifier).state = selected!),
-              ),
-            ]),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    child: IOEditor(
+                      inputController: inputController,
+                      outputController: outputController,
+                    )),
+              ]),
+            ),
           ),
-          SizedBox(
-              height: MediaQuery.of(context).size.height / 1.2,
-              child: IOEditor(
-                inputController: inputController,
-                outputController: outputController,
-              )),
         ],
       ),
     );

@@ -3,9 +3,8 @@ import 'package:devlab_flutter/src/converters/json_to_sql/page/json_to_sql_conve
 import 'package:devlab_flutter/src/converters/json_to_sql/page/json_to_sql_converter_options.dart';
 import 'package:devlab_flutter/src/converters/json_to_sql/page/json_to_sql_converter_output.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class JsonToSqlConverterPage extends ConsumerWidget {
   const JsonToSqlConverterPage({Key? key}) : super(key: key);
@@ -14,10 +13,12 @@ class JsonToSqlConverterPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return SizedBox(
         height: MediaQuery.of(context).size.height - kToolbarHeight,
-        child: YaruTabbedPage(
-          tabIcons: const [Icons.data_object, Icons.dataset, Icons.output],
-          tabTitles: ["input", "options", "output"],
-          views: const [JsonToSqlConverterInput(), JsonToSqlConverterOptions(), JsonToSqlConverterOutput()],
+        child: YaruTabBar(
+          tabs: const [
+            JsonToSqlConverterInput(),
+            JsonToSqlConverterOptions(),
+            JsonToSqlConverterOutput()
+          ],
           onTap: (int index) {
             ref.read(selectedTabProvider.notifier).state = index;
           },

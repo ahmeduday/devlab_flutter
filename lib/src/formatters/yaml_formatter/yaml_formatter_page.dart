@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:highlight/languages/yaml.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:json2yaml/json2yaml.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+import 'package:yaru/yaru.dart';
 
 class YamlFormatterPage extends HookConsumerWidget {
   const YamlFormatterPage({Key? key}) : super(key: key);
@@ -45,35 +45,38 @@ class YamlFormatterPage extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: YaruSection(headline: "configuration", children: [
-              YaruRow(
+            child: YaruSection(headline: const Text("configuration"), child:
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.arrow_right_alt),
-                trailingWidget: Padding(
+                leading: const Icon(Icons.arrow_right_alt),
+                trailing: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     "yaml_style",
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),
-                actionWidget: DropdownButton<YamlStyle>(
+                title: DropdownButton<YamlStyle>(
                     value: ref.watch(yamlStyleProvider),
                     items: getYamlStyleDropdownMenuItems(),
-                    onChanged: (selected) => ref.read(yamlStyleProvider.notifier).state = selected!),
+                    onChanged: (selected) =>
+                        ref.read(yamlStyleProvider.notifier).state = selected!),
               ),
-              YaruRow(
+              YaruTile(
                 enabled: true,
-                leadingWidget: const Icon(Icons.sort_by_alpha),
-                trailingWidget: Padding(
+                leading: const Icon(Icons.sort_by_alpha),
+                trailing: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     "sort_yaml_properties_alphabetically",
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),
-                actionWidget: Switch(
+                title: Switch(
                   value: ref.watch(sortAlphabeticallyProvider),
-                  onChanged: (value) => ref.read(sortAlphabeticallyProvider.notifier).state = value,
+                  onChanged: (value) => ref
+                      .read(sortAlphabeticallyProvider.notifier)
+                      .state = value,
                 ),
               )
             ]),
